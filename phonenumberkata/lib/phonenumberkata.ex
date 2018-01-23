@@ -1,23 +1,22 @@
 defmodule MAIN do
-  require TEST
-  @moduledoc """
-  Documentation for MAIN.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> MAIN.hello
-      :world
-
-  """
-  def hello do
-    :world
+  def main do
+    getFile()
+    |> clean()
   end
 
-  def test1 do
-    TEST.gettest
+  def getFile do
+    File.stream!("phone_data.csv") 
+    |> CSV.decode(headers: true)  
+    
   end
+
+  def clean(stream) do
+    Stream.map([stream], fn(x) -> removeName(x) end)
+    |> Enum.take(1)
+  end
+
+  def removeName(ok: %{"Name" => val1, "Phone Number" => val2}) do
+    Map.drop(%{"Name" => val1, "Phone Number" => val2}, [:Name])
+  end
+
 end
