@@ -1,4 +1,5 @@
 defmodule MAIN do
+  require TEST
   @moduledoc """
   Documentation for MAIN.
   """
@@ -14,5 +15,9 @@ defmodule MAIN do
   """
   def hello do
     :world
+  end
+
+  def test1 do
+    TEST.gettest
   end
 end
