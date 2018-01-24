@@ -7,19 +7,16 @@ defmodule MAIN do
 
   def getFile do
     File.stream!("phone_data.csv") 
-    |> CSV.decode(headers: true)
+    |> CSV.decode!(headers: true)
   end
 
   def convertToMaps(stream) do
     Enum.to_list(stream)
   end
 
-# %{"Name" => a, "Phone Number" => b}
-  # def dropName(list) do
-  #   Enum.each(list, Map.drop(%{"Name": a, "Phone Number": b}, [:Name]))
-    
+  # def dropName({:ok, %{"Name"  => a, "Phone Number" => b}}) do
+  #   Map.drop({}, [:Name])
   # end
-
 
   # def clean(stream) do
   #   Stream.map([stream], fn(x) -> removeName(x) end)
