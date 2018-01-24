@@ -14,9 +14,9 @@ defmodule MAIN do
     Enum.to_list(stream)
   end
 
-  # def dropName({:ok, %{"Name"  => a, "Phone Number" => b}}) do
-  #   Map.drop({}, [:Name])
-  # end
+  def dropName(map) do
+    Map.drop(map, ["Name"])
+  end
 
   # def clean(stream) do
   #   Stream.map([stream], fn(x) -> removeName(x) end)
