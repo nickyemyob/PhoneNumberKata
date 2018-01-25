@@ -17,8 +17,12 @@ defmodule MAIN do
   #   Map.drop(map, ["Name"])
   # end
 
-  def cleanPhoneNumber(map) do
-   Map.get_and_update(map, "Phone Number", fun) #todo
+  # def cleanPhoneNumber(map) do
+  #  Map.get_and_update(map, "Phone Number", fun) #todo
+  # end
+
+  def cleanPhoneNumber(phoneNumber) do
+    Regex.replace(~r/\D/, phoneNumber, "")
   end
 
 end

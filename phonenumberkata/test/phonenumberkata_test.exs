@@ -16,9 +16,15 @@ end
 #         assert MAIN.dropName(input) == expected
 # end
 
+# test "should remove spaces and symbols from phone number" do
+#         input = %{"Name"  => "Kimberlee Turlington", "Phone Number" => "039 298-72-30"}
+#         expected = %{"Name"  => "Kimberlee Turlington", "Phone Number" => "0392987230"}
+#         assert MAIN.cleanPhoneNumber(input) == expected
+# end
+
 test "should remove spaces and symbols from phone number" do
-        input = %{"Name"  => "Kimberlee Turlington", "Phone Number" => "039 298-72-30"}
-        expected = %{"Name"  => "Kimberlee Turlington", "Phone Number" => "0392987230"}
+        input = "039 298-72-30"
+        expected = "0392987230"     
         assert MAIN.cleanPhoneNumber(input) == expected
 end
 
