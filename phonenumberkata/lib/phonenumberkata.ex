@@ -21,8 +21,23 @@ defmodule MAIN do
   #  Map.get_and_update(map, "Phone Number", fun) #todo
   # end
 
+  # def loop([head | tail]) do
+  #   copyList = tail
+
+  # loop([])
+  # end
+  
+  # def loop([]) do
+  # end
+
   def cleanPhoneNumber(phoneNumber) do
     Regex.replace(~r/\D/, phoneNumber, "")
+  end
+
+  def checkConsistancy(phoneNumber, phoneNumberFromList) do
+    cleanedPhoneNumber = cleanPhoneNumber(phoneNumber)
+    cleanedPhoneNumberFromList = cleanPhoneNumber(phoneNumberFromList)
+    cleanedPhoneNumber == String.slice(cleanedPhoneNumberFromList,0,String.length(cleanedPhoneNumber)) 
   end
 
 end
