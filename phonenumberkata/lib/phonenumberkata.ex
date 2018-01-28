@@ -18,8 +18,8 @@ defmodule MAIN do
   #   is_consistant([])
   # end
   
-  def is_consistant([]) do
-  end
+  # def is_consistant([]) do
+  # end
 
   def clean_phone_number(phoneNumber) do
     Regex.replace(~r/\D/, phoneNumber, "")
@@ -29,6 +29,15 @@ defmodule MAIN do
     cleanedPhoneNumber = clean_phone_number(phoneNumber)
     cleanedPhoneNumberFromList = clean_phone_number(phoneNumberFromList)
     cleanedPhoneNumber == String.slice(cleanedPhoneNumberFromList,0,String.length(cleanedPhoneNumber)) 
+  end
+
+  def extract_phone_number_from_list([currentRecord | listOfRecords], listOfPhoneNumbers) do
+    listOfPhoneNumbers = [clean_phone_number(currentRecord["Phone Number"]) | listOfPhoneNumbers]
+    extract_phone_number_from_list(listOfRecords, listOfPhoneNumbers)
+  end
+  
+  def extract_phone_number_from_list([], listOfPhoneNumbers) do
+    listOfPhoneNumbers
   end
 
 end

@@ -3,8 +3,11 @@ defmodule MAINTest do
   doctest MAIN
 
 test "get the contents of file and convert to list of maps" do
-        expected =[%{"Name"  => "Kimberlee Turlington", "Phone Number" => "039 298-72-30"},
-                   %{"Name"  => "Miguel Eveland", "Phone Number"  => "032-2659094"}]
+        expected =
+        [
+                %{"Name"  => "Kimberlee Turlington", "Phone Number" => "039 298-72-30"},
+                %{"Name"  => "Miguel Eveland", "Phone Number"  => "032-2659094"}
+        ]
         input = File.stream!("test_data.csv") |> CSV.decode!(headers: true)
         assert MAIN.convert_to_maps(input) == expected
 end
@@ -34,6 +37,22 @@ test "should return false if a phone number is not the beginning of anothers pho
         testedPhoneNumber = "1244"
         expected = false     
         assert MAIN.check_consistancy(inputPhoneNumber,testedPhoneNumber) == expected
+end
+
+test "should return a list of clean phone numbers from records" do
+        input = 
+        [
+                %{"Name"  => "Kimberlee Turlington", "Phone Number" => "039 298-72-30"},
+                %{"Name"  => "Miguel Eveland", "Phone Number"  => "032-2659094"}
+        ]
+
+        expected = 
+        [
+                "0322659094",
+                "0392987230"
+                
+        ]     
+        assert MAIN.extract_phone_number_from_list(input,[]) == expected
 end
 
 end
