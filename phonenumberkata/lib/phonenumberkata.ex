@@ -25,10 +25,11 @@ defmodule MAIN do
     Regex.replace(~r/\D/, phoneNumber, "")
   end
 
-  def check_consistancy(phoneNumber, phoneNumberFromList) do
+  def is_consistant(phoneNumber, phoneNumberFromList) do
     cleanedPhoneNumber = clean_phone_number(phoneNumber)
     cleanedPhoneNumberFromList = clean_phone_number(phoneNumberFromList)
-    cleanedPhoneNumber == String.slice(cleanedPhoneNumberFromList,0,String.length(cleanedPhoneNumber)) 
+    !(cleanedPhoneNumber == String.slice(cleanedPhoneNumberFromList,0,String.length(cleanedPhoneNumber))
+     && String.length(phoneNumber) != String.length(phoneNumberFromList))
   end
 
   def extract_phone_number_from_list([currentRecord | listOfRecords], listOfPhoneNumbers) do
