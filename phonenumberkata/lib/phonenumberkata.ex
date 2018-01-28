@@ -1,42 +1,33 @@
 defmodule MAIN do
   def main do
-    getFile()
-    |> convertToMaps()
+    get_file()
+    |> convert_to_maps()
   end
 
-  def getFile do
+  def get_file do
     File.stream!("phone_data.csv") 
     |> CSV.decode!(headers: true)
   end
 
-  def convertToMaps(stream) do
+  def convert_to_maps(stream) do
     Enum.to_list(stream)
   end
 
-  # def dropName(map) do
-  #   Map.drop(map, ["Name"])
-  # end
-
-  # def cleanPhoneNumber(map) do
-  #  Map.get_and_update(map, "Phone Number", fun) #todo
-  # end
-
-  # def loop([head | tail]) do
+  # def is_consistant([head | tail]) do
   #   copyList = tail
-
-  # loop([])
+  #   is_consistant([])
   # end
   
-  # def loop([]) do
-  # end
+  def is_consistant([]) do
+  end
 
-  def cleanPhoneNumber(phoneNumber) do
+  def clean_phone_number(phoneNumber) do
     Regex.replace(~r/\D/, phoneNumber, "")
   end
 
-  def checkConsistancy(phoneNumber, phoneNumberFromList) do
-    cleanedPhoneNumber = cleanPhoneNumber(phoneNumber)
-    cleanedPhoneNumberFromList = cleanPhoneNumber(phoneNumberFromList)
+  def check_consistancy(phoneNumber, phoneNumberFromList) do
+    cleanedPhoneNumber = clean_phone_number(phoneNumber)
+    cleanedPhoneNumberFromList = clean_phone_number(phoneNumberFromList)
     cleanedPhoneNumber == String.slice(cleanedPhoneNumberFromList,0,String.length(cleanedPhoneNumber)) 
   end
 
