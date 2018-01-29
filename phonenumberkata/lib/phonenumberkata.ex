@@ -36,15 +36,20 @@ defmodule MAIN do
 
 
   def check_consistancy([head | tail], consistancy) do
-      consistancy = Enum.any?(tail,fn(x) -> is_consistant(head, x) end)
+      consistancy = Enum.all?(tail,fn(x) -> is_consistant(head, x) end)
 
-      check_consistancy([tail], consistancy)
+      check_consistancy(tail, consistancy)
       
 
   end
 
   def check_consistancy([], consistancy) do
-    consistancy
+    case consistancy do
+      true -> true
+      false -> false
+      nil -> false
+    end
+
   end
 
 end
