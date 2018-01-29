@@ -13,14 +13,6 @@ defmodule MAIN do
     Enum.to_list(stream)
   end
 
-  # def is_consistant([head | tail]) do
-  #   copyList = tail
-  #   is_consistant([])
-  # end
-  
-  # def is_consistant([]) do
-  # end
-
   def clean_phone_number(phoneNumber) do
     Regex.replace(~r/\D/, phoneNumber, "")
   end
@@ -28,17 +20,31 @@ defmodule MAIN do
   def is_consistant(phoneNumber, phoneNumberFromList) do
     cleanedPhoneNumber = clean_phone_number(phoneNumber)
     cleanedPhoneNumberFromList = clean_phone_number(phoneNumberFromList)
+
     !(cleanedPhoneNumber == String.slice(cleanedPhoneNumberFromList,0,String.length(cleanedPhoneNumber))
-     && String.length(phoneNumber) != String.length(phoneNumberFromList))
+     && String.length(cleanedPhoneNumber) != String.length(cleanedPhoneNumberFromList))
   end
 
-  def extract_phone_number_from_list([currentRecord | listOfRecords], listOfPhoneNumbers) do
+  def extract_phone_number_from_maps_to_list([currentRecord | listOfRecords], listOfPhoneNumbers) do
     listOfPhoneNumbers = [clean_phone_number(currentRecord["Phone Number"]) | listOfPhoneNumbers]
-    extract_phone_number_from_list(listOfRecords, listOfPhoneNumbers)
+    extract_phone_number_from_maps_to_list(listOfRecords, listOfPhoneNumbers)
   end
   
-  def extract_phone_number_from_list([], listOfPhoneNumbers) do
+  def extract_phone_number_from_maps_to_list([], listOfPhoneNumbers) do
     listOfPhoneNumbers
+  end
+
+
+  def check_consistancy([head | tail], consistancy) do
+      consistancy = Enum.any?(tail,fn(x) -> is_consistant(head, x) end)
+
+      check_consistancy([tail], consistancy)
+      
+
+  end
+
+  def check_consistancy([], consistancy) do
+    consistancy
   end
 
 end

@@ -2,23 +2,6 @@ defmodule MAINTest do
   use ExUnit.Case
   doctest MAIN
 
-test "get the contents of file and convert to list of maps" do
-        expected =
-        [
-                %{"Name"  => "Kimberlee Turlington", "Phone Number" => "039 298-72-30"},
-                %{"Name"  => "Miguel Eveland", "Phone Number"  => "032-2659094"}
-        ]
-        input = File.stream!("test_data.csv") |> CSV.decode!(headers: true)
-        assert MAIN.convert_to_maps(input) == expected
-end
-
-# test "should return true if a list of phone numbers is inconsistant" do
-#         input =[%{"Name"  => "Kimberlee Turlington", "Phone Number" => "039 298-72-30"},
-#                    %{"Name"  => "Miguel Eveland", "Phone Number"  => "032-2659094"}]
-#         expected = true
-#         assert MAIN.is_consistant(input) == expected
-# end
-
 test "should remove spaces and symbols from phone number" do
         input = "039 298-72-30"
         expected = "0392987230"     
@@ -59,7 +42,44 @@ test "should return a list of clean phone numbers from records" do
                 "0392987230"
                 
         ]     
-        assert MAIN.extract_phone_number_from_list(input,[]) == expected
+        assert MAIN.extract_phone_number_from_maps_to_list(input,[]) == expected
+end
+
+test "should return true if all unique phone numbers in list are consistant" do
+        input = 
+        [
+                "0322659094",
+                "0392987230"
+        ]    
+        initialState = false
+
+        expected = true
+        assert MAIN.check_consistancy(input, initialState) == expected
+end
+
+test "should return true if all non unique phone numbers in list are consistant" do
+        input = 
+        [
+                "0322659094",
+                "0322659094",
+                "0392987230"
+        ]    
+        initialState = false
+
+        expected = true
+        assert MAIN.check_consistancy(input, initialState) == expected
+end
+
+test "should return false if all phone numbers in list are not consistant" do
+        input = 
+        [
+                "0322659094",
+                "03226590944"
+        ]    
+         initialState = false
+
+        expected = false
+        assert MAIN.check_consistancy(input, initialState) == expected
 end
 
 end
