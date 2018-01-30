@@ -62,7 +62,6 @@ test "should return true if all non unique phone numbers in list are consistant"
         [
                 "0322659094",
                 "0322659094",
-                "0392987230"
         ]    
         initialState = false
 
@@ -71,11 +70,16 @@ test "should return true if all non unique phone numbers in list are consistant"
 end
 
 test "should return false if all phone numbers in list are not consistant" do
+        # input = 
+        # [
+        #         "0322659094",
+        #         "03226590944"
+        # ]    
         input = 
         [
-                "0322659094",
-                "03226590944"
-        ]    
+                "01",
+                "0"
+        ]
          initialState = false
 
         expected = false

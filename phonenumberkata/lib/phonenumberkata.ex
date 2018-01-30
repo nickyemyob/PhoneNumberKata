@@ -1,11 +1,14 @@
 defmodule MAIN do
-  def main do
-    get_file()
+  def main(filename) do
+    get_file(filename)
     |> convert_to_maps()
+    |> extract_phone_number_from_maps_to_list([])
+    |> Enum.sort()
+    |> check_consistancy(false)
   end
 
-  def get_file do
-    File.stream!("phone_data.csv") 
+  def get_file(filename) do
+    File.stream!(filename) 
     |> CSV.decode!(headers: true)
   end
 
@@ -17,14 +20,6 @@ defmodule MAIN do
     Regex.replace(~r/\D/, phoneNumber, "")
   end
 
-  def is_consistant(phoneNumber, phoneNumberFromList) do
-    cleanedPhoneNumber = clean_phone_number(phoneNumber)
-    cleanedPhoneNumberFromList = clean_phone_number(phoneNumberFromList)
-
-    !(cleanedPhoneNumber == String.slice(cleanedPhoneNumberFromList,0,String.length(cleanedPhoneNumber))
-     && String.length(cleanedPhoneNumber) != String.length(cleanedPhoneNumberFromList))
-  end
-
   def extract_phone_number_from_maps_to_list([currentRecord | listOfRecords], listOfPhoneNumbers) do
     listOfPhoneNumbers = [clean_phone_number(currentRecord["Phone Number"]) | listOfPhoneNumbers]
     extract_phone_number_from_maps_to_list(listOfRecords, listOfPhoneNumbers)
@@ -34,22 +29,24 @@ defmodule MAIN do
     listOfPhoneNumbers
   end
 
+# TODO: FIX THIS. MAKE IS WORK 2 WAYS
+  def is_consistant(phoneNumber, phoneNumberFromList) do
+    !(phoneNumber == String.slice(phoneNumberFromList,0,String.length(phoneNumber))
+     && String.length(phoneNumber) != String.length(phoneNumberFromList))
+  end
 
   def check_consistancy([head | tail], consistancy) do
-      consistancy = Enum.all?(tail,fn(x) -> is_consistant(head, x) end)
-
+      if tail != [] do
+        consistancy = Enum.all?(tail,fn(x) -> is_consistant(head, x) end)
+      end
+      if !consistancy do
+        check_consistancy([], consistancy) 
+      end
       check_consistancy(tail, consistancy)
-      
-
   end
 
   def check_consistancy([], consistancy) do
-    case consistancy do
-      true -> true
-      false -> false
-      nil -> false
-    end
-
+    consistancy
   end
 
 end
