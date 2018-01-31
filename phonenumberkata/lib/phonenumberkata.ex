@@ -31,8 +31,13 @@ defmodule MAIN do
 
 # TODO: FIX THIS. MAKE IS WORK 2 WAYS
   def is_consistant(phoneNumber, phoneNumberFromList) do
-    !(phoneNumber == String.slice(phoneNumberFromList,0,String.length(phoneNumber))
-     && String.length(phoneNumber) != String.length(phoneNumberFromList))
+    if String.length(phoneNumberFromList) > String.length(phoneNumber) do
+      !(phoneNumber == String.slice(phoneNumberFromList,0,String.length(phoneNumber))
+       && String.length(phoneNumber) != String.length(phoneNumberFromList))
+    else
+      !(phoneNumberFromList == String.slice(phoneNumber,0,String.length(phoneNumberFromList))
+       && String.length(phoneNumberFromList) != String.length(phoneNumber))
+    end
   end
 
   def check_consistancy([head | tail], consistancy) do
