@@ -54,6 +54,4 @@ defmodule MAIN do
   def check_consistancy([], consistancy) do
     consistancy
   end
-
-
 end
