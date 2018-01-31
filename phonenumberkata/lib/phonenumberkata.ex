@@ -1,9 +1,9 @@
 defmodule MAIN do
-  def main(filename) do
-    get_file(filename)
-    |> convert_to_maps()
+  def main() do
+    get_file("test_data.csv")
+    |> convert_to_maps
     |> extract_phone_number_from_maps_to_list([])
-    |> Enum.sort()
+    |> Enum.sort
     |> check_consistancy(false)
   end
 
@@ -29,7 +29,6 @@ defmodule MAIN do
     listOfPhoneNumbers
   end
 
-# TODO: FIX THIS. MAKE IS WORK 2 WAYS
   def is_consistant(phoneNumber, phoneNumberFromList) do
     if String.length(phoneNumberFromList) > String.length(phoneNumber) do
       !(phoneNumber == String.slice(phoneNumberFromList,0,String.length(phoneNumber))
@@ -46,12 +45,15 @@ defmodule MAIN do
       end
       if !consistancy do
         check_consistancy([], consistancy) 
+      else
+        IO.puts(head)
+        check_consistancy(tail, consistancy)
       end
-      check_consistancy(tail, consistancy)
   end
 
   def check_consistancy([], consistancy) do
     consistancy
   end
+
 
 end
